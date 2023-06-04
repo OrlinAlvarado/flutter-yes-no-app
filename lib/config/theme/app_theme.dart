@@ -13,17 +13,21 @@ const List<Color> _colorThemes = [
 ];
 
 class AppTheme {
-  final int selectedColor;
+  final int selectedColorIndex;
+  final Color? selectedColor;
+  final bool isDark;
 
-  AppTheme({required this.selectedColor})
-      : assert(selectedColor >= 0 && selectedColor <= _colorThemes.length - 1,
+  AppTheme({this.selectedColorIndex = 0, this.selectedColor, this.isDark = false })
+      : assert(
+            selectedColorIndex >= 0 &&
+                selectedColorIndex <= _colorThemes.length - 1,
             'Colors must be between 0 and ${_colorThemes.length}');
 
   ThemeData theme() {
     return ThemeData(
-        useMaterial3: true, 
-        colorSchemeSeed: _colorThemes[selectedColor],
-        // brightness: Brightness.dark
-      );
+      useMaterial3: true,
+      colorSchemeSeed: selectedColor ?? _colorThemes[selectedColorIndex],
+      brightness: isDark ? Brightness.dark : null
+    );
   }
 }
